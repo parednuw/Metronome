@@ -1,0 +1,12 @@
+#user settings
+xcuserdata/
+
+#compatibility with Xcode 8 or earlier
+*.xcscmblueprint
+*.xccheckout
+
+#project
+**/Builds
+**/JuceLibraryCode
+
+.DS_STORE
