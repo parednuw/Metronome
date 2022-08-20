@@ -19,9 +19,8 @@ Metronome::Metronome()
 
 void Metronome::setFileToPlay(const juce::String& nameOfFileToPlay)
 {
-	
-	juce::File fileToPlay { juce::File::getSpecialLocation(juce::File::SpecialLocationType::currentApplicationFile).getParentDirectory()};
-	auto mSamples = fileToPlay.findChildFiles(juce::File::TypesOfFileToFind::findFiles, true, nameOfFileToPlay);
+	juce::File fileToPlayDir { "/Users/paulwunder/Dev/Projects/Metronome/Audio"};	//Replace path with your path to "/Metronome/Audio"
+	auto mSamples = fileToPlayDir.findChildFiles(juce::File::TypesOfFileToFind::findFiles, true, nameOfFileToPlay);
 	jassert(mSamples[0].exists());
 	
 	setmSamples(mSamples);
