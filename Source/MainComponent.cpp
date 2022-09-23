@@ -50,7 +50,7 @@ MainComponent::MainComponent()
 	mCountdownChooser.addItem("20", 4);
 	mCountdownChooser.addItem("25", 5);
 	mCountdownChooser.addItem("30", 6);
-	mCountdownChooser.addItem("1", 7);
+	//mCountdownChooser.addItem("1", 7);
 	mCountdownChooser.setSelectedId(1);
 	mCountdownChooser.onChange = [this]() { chooseCountdown(); };
 	addAndMakeVisible(&mCountdownChooser);
@@ -131,7 +131,6 @@ void MainComponent::chooseCountdown()
 	mCountdownStart.setButtonText("Start");		//
 	
 	int id = mCountdownChooser.getSelectedId();
-	
 	if (id == 1)
 		mCountdown.setCountdown(5);
 	if (id == 2)
@@ -144,17 +143,19 @@ void MainComponent::chooseCountdown()
 		mCountdown.setCountdown(25);
 	if (id == 6)
 		mCountdown.setCountdown(30);
-	if (id == 7)
-		mCountdown.setCountdown(1);
+	//if (id == 7)
+		//mCountdown.setCountdown(1);
 }
 
 void MainComponent::startCountdown()
 {
 	mCountdown.startTimer(1000);
+	mCountdown.countdownEnabled = true;
 }
 
 void MainComponent::stopCountdown()
 {
+	mCountdown.countdownEnabled = false;
 	chooseCountdown();
 }
 
@@ -202,6 +203,9 @@ void MainComponent::releaseResources()
 void MainComponent::timerCallback()
 {
 	updateCountdownDisplay();
+	
+	if(!mCountdown.countdownEnabled)
+		mCountdownStart.setButtonText("Start");
 }
 
 void MainComponent::updateCountdownDisplay()

@@ -20,23 +20,13 @@ Countdown::~Countdown()
 	stopTimer();
 }
 
-void Countdown::setCountdown(int requestedCountdownInMin)
-{
-	countdownMinToSec(requestedCountdownInMin);
-}
-
 void Countdown::resetCountdown()
 {
 	if ( isTimerRunning() )
 	{
-		mCountdownInSec = 0;
+		mCountdownInSec = mRequestedCountdownInSec;
 		stopTimer();
 	}
-}
-
-void Countdown::countdownMinToSec(int mCountdownInMin)
-{
-	mCountdownInSec = mCountdownInMin * 60;
 }
 
 void Countdown::timerCallback()
@@ -47,13 +37,24 @@ void Countdown::timerCallback()
 void Countdown::counter()
 {
 	if (getTimerInterval() == 1000)
-	{
-		//DBG("Time: " << mTimeInSec);
-		mCountdownInSec = mCountdownInSec - 1;
-	}
+		mCountdownInSec -= 1;
 	
 	if (mCountdownInSec == 0)
+	{
+		countdownEnabled = false;
 		resetCountdown();
+	}
+}
+
+void Countdown::setCountdown(int requestedCountdownInMin)
+{
+	mRequestedCountdownInSec = countdownMinToSec(requestedCountdownInMin);
+	mCountdownInSec = mRequestedCountdownInSec;
+}
+
+int Countdown::countdownMinToSec(int mCountdownInMin)
+{
+	return mCountdownInMin * 60;
 }
 
 int Countdown::getCountdownInSec()

@@ -18,9 +18,9 @@ public:
 	Countdown();
 	~Countdown();
 	
-	void setCountdown(int requestedTimeInMin);
+	void setCountdown(int requestedCountdownInMin);
 	void resetCountdown();
-	void countdownMinToSec(int timeInMin);
+	int countdownMinToSec(int timeInMin);
 	
 	void timerCallback() override;
 	
@@ -28,10 +28,13 @@ public:
 	juce::String getCountdownInSecAsString();
 	juce::String getCountdownAsFormattedString();
 	
+	bool countdownEnabled = false;
+	
 private:
 	void counter();
 	
 	int mCountdownInMin;
 	int mCountdownInSec;
-	
+	int mRequestedCountdownInMin;
+	int mRequestedCountdownInSec;
 };
