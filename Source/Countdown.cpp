@@ -50,10 +50,10 @@ void Countdown::counter()
 	{
 		//DBG("Time: " << mTimeInSec);
 		mCountdownInSec = mCountdownInSec - 1;
-		
-		if (mCountdownInSec == 0)
-			stopTimer();
 	}
+	
+	if (mCountdownInSec == 0)
+		resetCountdown();
 }
 
 int Countdown::getCountdownInSec()
