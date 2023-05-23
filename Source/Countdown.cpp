@@ -74,7 +74,11 @@ juce::String Countdown::getCountdownAsFormattedString()
 	int seconds = mCountdownInSec - minutes * 60;
 	juce::String finalString = juce::String(minutes);
 	finalString += ":";
-	finalString += juce::String(seconds);
+	
+	if (seconds < 10)
+		finalString += ("0" + juce::String(seconds));
+	else
+		finalString += juce::String(seconds);
 	
 	return finalString;
 }

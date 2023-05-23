@@ -10,8 +10,8 @@
             file="Source/MainComponent.cpp"/>
       <FILE id="Cx8wDp" name="Metronome.cpp" compile="1" resource="0" file="Source/Metronome.cpp"/>
       <FILE id="AXP5Cf" name="Metronome.h" compile="0" resource="0" file="Source/Metronome.h"/>
-      <FILE id="GgYZSj" name="cTimer.cpp" compile="1" resource="0" file="Source/cTimer.cpp"/>
-      <FILE id="bhNJru" name="cTimer.h" compile="0" resource="0" file="Source/cTimer.h"/>
+      <FILE id="GgYZSj" name="Countdown.cpp" compile="1" resource="0" file="Source/Countdown.cpp"/>
+      <FILE id="bhNJru" name="Countdown.h" compile="0" resource="0" file="Source/Countdown.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
