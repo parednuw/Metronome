@@ -17,13 +17,6 @@ MainComponent::MainComponent()
 	mPlayButton.onClick = [this]() { changeMetronomeState(); };
 	addAndMakeVisible(&mPlayButton);
 	
-	/*
-	mStopButton.setToggleState(true, juce::NotificationType::dontSendNotification);
-	mStopButton.setRadioGroupId(1);
-	mStopButton.onClick = [this]() { stop(); };
-	addAndMakeVisible(&mStopButton);
-	 */
-	
 	mTempoSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
 	mTempoSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, false, 60, 30);
 	mTempoSlider.setRange(20, 300, 1);
@@ -50,7 +43,6 @@ MainComponent::MainComponent()
 	mCountdownChooser.addItem("20", 4);
 	mCountdownChooser.addItem("25", 5);
 	mCountdownChooser.addItem("30", 6);
-	//mCountdownChooser.addItem("1", 7);
 	mCountdownChooser.setSelectedId(1);
 	mCountdownChooser.onChange = [this]() { chooseCountdown(); };
 	addAndMakeVisible(&mCountdownChooser);
@@ -87,12 +79,10 @@ MainComponent::~MainComponent()
 void MainComponent::play()
 {
 	mMetronome.setFirstTrigger(true);
-	//mMetronomeState = MetronomeState::Playing;
 }
 
 void MainComponent::stop()
 {
-	//mMetronomeState = MetronomeState::Stopped;
 	mMetronome.resetCountSamples();
 }
 
@@ -143,8 +133,6 @@ void MainComponent::chooseCountdown()
 		mCountdown.setCountdown(25);
 	if (id == 6)
 		mCountdown.setCountdown(30);
-	//if (id == 7)
-		//mCountdown.setCountdown(1);
 }
 
 void MainComponent::startCountdown()

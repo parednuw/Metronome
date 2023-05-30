@@ -58,7 +58,6 @@ private:
 	Countdown mCountdown;
 	
 	juce::TextButton mPlayButton { "Play" };
-	//juce::TextButton mStopButton { "Stop" };
 	juce::Label mChooseLabel { {}, "Choose Sound" };
 	juce::ComboBox mChooseBox { "Choose\n Sound"};
 	juce::Slider mTempoSlider;
