@@ -127,7 +127,7 @@ void MainComponent::chooseCountdown()
 {
 	mCountdown.resetCountdown();
 	
-	mCountdownState = CountdownState::Stopped;	//these two lines of code are not very elegant. This related to stopCountdown --> chooseCountdown
+	mCountdown.countdownEnabled = false;	//these two lines of code are not very elegant. This related to stopCountdown --> chooseCountdown
 	mCountdownStart.setButtonText("Start");		//
 	
 	int id = mCountdownChooser.getSelectedId();
@@ -161,15 +161,15 @@ void MainComponent::stopCountdown()
 
 void MainComponent::changeCountdownState()
 {
-	if (mCountdownState == CountdownState::Stopped)
+	if (mCountdown.countdownEnabled == false)
 	{
-		mCountdownState = CountdownState::Counting;
+		mCountdown.countdownEnabled = true;
 		mCountdownStart.setButtonText("Stop");
 		startCountdown();
 	}
-	else if (mCountdownState == CountdownState::Counting)
+	else if (mCountdown.countdownEnabled == true)
 	{
-		mCountdownState = CountdownState::Stopped;
+		mCountdown.countdownEnabled = false;
 		mCountdownStart.setButtonText("Start");
 		stopCountdown();
 	}
