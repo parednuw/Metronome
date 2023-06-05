@@ -13,6 +13,7 @@ MainComponent::MainComponent()
 	mPlayButton.setToggleState(false, juce::NotificationType::dontSendNotification);
 	mPlayButton.setRadioGroupId(1);
 	mPlayButton.onClick = [this]() { changeMetronomeState(); };
+	mPlayButton.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFF35C521));
 	addAndMakeVisible(&mPlayButton);
 	
 	mTempoSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
@@ -62,6 +63,7 @@ MainComponent::MainComponent()
 	addAndMakeVisible(&mCountdownDisplay);
 	
 	mCountdownStart.onClick = [this]() { changeCountdownState(); };
+	mCountdownStart.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFFABC0A8));
 	addAndMakeVisible(&mCountdownStart);
 	
 	Timer::startTimerHz(60);
@@ -103,12 +105,14 @@ void MainComponent::changeMetronomeState()
 	{
 		mMetronomeState = MetronomeState::Playing;
 		mPlayButton.setButtonText("Stop");
+		mPlayButton.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFFC52121));
 		play();
 	}
 	else if (mMetronomeState == MetronomeState::Playing)
 	{
 		mMetronomeState = MetronomeState::Stopped;
 		mPlayButton.setButtonText("Play");
+		mPlayButton.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFF35C521));
 		stop();
 	}
 }
@@ -164,12 +168,14 @@ void MainComponent::changeCountdownState()
 	{
 		mCountdown.countdownEnabled = true;
 		mCountdownStart.setButtonText("Stop");
+		mCountdownStart.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFF725E5B));
 		startCountdown();
 	}
 	else if (mCountdown.countdownEnabled == true)
 	{
 		mCountdown.countdownEnabled = false;
 		mCountdownStart.setButtonText("Start");
+		mCountdownStart.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFFABC0A8));
 		stopCountdown();
 	}
 }
@@ -237,7 +243,6 @@ void MainComponent::resized()
 	volumeSliderFlexBox.flexDirection = juce::FlexBox::Direction::column;
 	volumeSliderFlexBox.items.add(juce::FlexItem(mVolumeLabel).withFlex(1));
 	volumeSliderFlexBox.items.add(juce::FlexItem(mVolumeSlider).withFlex(7));
-	
 	
 	juce::FlexBox metronomeFlexBox2;
 	metronomeFlexBox2.flexDirection = juce::FlexBox::Direction::row;
