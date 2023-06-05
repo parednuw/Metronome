@@ -3,11 +3,9 @@
 MainComponent::MainComponent()
 {
 	
-	mChooseLabel.setJustificationType(juce::Justification::centred);
-	addAndMakeVisible(&mChooseLabel);
-	
-	mChooseBox.addItem("Short White Noise Burst", 1);
+	mChooseBox.addItem("SWNB", 1);
 	mChooseBox.addItem("Cowbell", 2);
+	mChooseBox.setJustificationType(juce::Justification::centred);
 	mChooseBox.setSelectedId(1);
 	mChooseBox.onChange = [this]() { chooseSound(); };
 	addAndMakeVisible(&mChooseBox);
@@ -18,32 +16,36 @@ MainComponent::MainComponent()
 	addAndMakeVisible(&mPlayButton);
 	
 	mTempoSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
-	mTempoSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, false, 50, 30);
+	mTempoSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, false, 70, 30);
 	mTempoSlider.setRange(20, 300, 1);
 	mTempoSlider.setValue(60);
 	mTempoSlider.setNumDecimalPlacesToDisplay(0);
-	//mTempoSlider.setTextValueSuffix(" bpm");
+	mTempoSlider.setTextValueSuffix(" bpm");
+	mTempoSlider.setColour(juce::Slider::textBoxOutlineColourId, juce::Colours::transparentBlack);
 	addAndMakeVisible(&mTempoSlider);
 	
 	mVolumeSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
-	mVolumeSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, false, 50, 30);
+	mVolumeSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, false, 90, 30);
 	mVolumeSlider.setSkewFactorFromMidPoint(7);
 	mVolumeSlider.setRange(-98, 0, 0.1);
 	mVolumeSlider.setValue(-12);
 	mVolumeSlider.setNumDecimalPlacesToDisplay(1);
+	mVolumeSlider.setTextValueSuffix(" dBFS");
+	mVolumeSlider.setColour(juce::Slider::textBoxOutlineColourId, juce::Colours::transparentBlack);
 	mVolumeSlider.addListener(&mMetronome);
 	addAndMakeVisible(&mVolumeSlider);
 	
-	mTempoLabel.setText("bpm", juce::dontSendNotification);
-	mTempoLabel.attachToComponent(&mTempoSlider, false);
-	//addAndMakeVisible(&mTempoLabel);
+	mTempoLabel.setJustificationType(juce::Justification::centred);
+	addAndMakeVisible(&mTempoLabel);
 	
-	mVolumeLabel.setText("dB", juce::dontSendNotification);
-	mVolumeLabel.attachToComponent(&mVolumeSlider, false);
-	//addAndMakeVisible(&mVolumeLabel);
+	mVolumeLabel.setJustificationType(juce::Justification::centred);
+	addAndMakeVisible(&mVolumeLabel);
 	
 	mCountdownLabel.setJustificationType(juce::Justification::centred);
 	addAndMakeVisible(&mCountdownLabel);
+	
+	mMetronomeLabel.setJustificationType(juce::Justification::centred);
+	addAndMakeVisible(&mMetronomeLabel);
 	
 	mCountdownChooser.addItem("5", 1);
 	mCountdownChooser.addItem("10", 2);
@@ -51,6 +53,7 @@ MainComponent::MainComponent()
 	mCountdownChooser.addItem("20", 4);
 	mCountdownChooser.addItem("25", 5);
 	mCountdownChooser.addItem("30", 6);
+	mCountdownChooser.setJustificationType(juce::Justification::centred);
 	mCountdownChooser.setSelectedId(1);
 	mCountdownChooser.onChange = [this]() { chooseCountdown(); };
 	addAndMakeVisible(&mCountdownChooser);
@@ -185,7 +188,6 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
 		mMetronome.calcWhenPlayFile(bufferToFill);
 
 	float level = juce::Decibels::decibelsToGain(mMetronome.getSliderLevel());
-	DBG(level);
 	bufferToFill.buffer->applyGain(bufferToFill.startSample, bufferToFill.numSamples, level);
 	mMetronome.setTempo(MainComponent::mTempoSlider.getValue());
 }
@@ -221,26 +223,43 @@ void MainComponent::resized()
 {
 	juce::Rectangle<int> bounds = getLocalBounds();
 	
-	juce::FlexBox flexBox;
-	juce::FlexBox chooseFlexBox;
+	juce::FlexBox metronomeFlexBox1;
+	metronomeFlexBox1.flexDirection = juce::FlexBox::Direction::column;
+	metronomeFlexBox1.items.add(juce::FlexItem(mChooseBox).withFlex(3));
+	metronomeFlexBox1.items.add(juce::FlexItem(mPlayButton).withFlex(7));
+	
+	juce::FlexBox tempoSliderFlexBox;
+	tempoSliderFlexBox.flexDirection = juce::FlexBox::Direction::column;
+	tempoSliderFlexBox.items.add(juce::FlexItem(mTempoLabel).withFlex(1));
+	tempoSliderFlexBox.items.add(juce::FlexItem(mTempoSlider).withFlex(7));
+	
+	juce::FlexBox volumeSliderFlexBox;
+	volumeSliderFlexBox.flexDirection = juce::FlexBox::Direction::column;
+	volumeSliderFlexBox.items.add(juce::FlexItem(mVolumeLabel).withFlex(1));
+	volumeSliderFlexBox.items.add(juce::FlexItem(mVolumeSlider).withFlex(7));
+	
+	
+	juce::FlexBox metronomeFlexBox2;
+	metronomeFlexBox2.flexDirection = juce::FlexBox::Direction::row;
+	metronomeFlexBox2.items.add(juce::FlexItem(metronomeFlexBox1).withFlex(1));
+	metronomeFlexBox2.items.add(juce::FlexItem(tempoSliderFlexBox).withFlex(1));
+	metronomeFlexBox2.items.add(juce::FlexItem(volumeSliderFlexBox).withFlex(1));
+	
+	juce::FlexBox metronomeFlexBox3;
+	metronomeFlexBox3.flexDirection = juce::FlexBox::Direction::column;
+	metronomeFlexBox3.items.add(juce::FlexItem(mMetronomeLabel).withFlex(2));
+	metronomeFlexBox3.items.add(juce::FlexItem(metronomeFlexBox2).withFlex(8));
+	
 	juce::FlexBox timerFlexBox;
-
-	chooseFlexBox.flexDirection = juce::FlexBox::Direction::column;
-	chooseFlexBox.items.add(juce::FlexItem(getWidth() / mHorizontalItemCount, getHeight() * 0.2, mChooseLabel));
-	chooseFlexBox.items.add(juce::FlexItem(getWidth() / mHorizontalItemCount, getHeight() * 0.8, mChooseBox));
-	
 	timerFlexBox.flexDirection = juce::FlexBox::Direction::column;
-	timerFlexBox.items.add(juce::FlexItem(getWidth() / mHorizontalItemCount, getHeight() * 0.2, mCountdownLabel));
-	timerFlexBox.items.add(juce::FlexItem(getWidth() / mHorizontalItemCount, getHeight() * 0.2, mCountdownChooser));
-	timerFlexBox.items.add(juce::FlexItem(getWidth() / mHorizontalItemCount, getHeight() * 0.3, mCountdownDisplay));
-	timerFlexBox.items.add(juce::FlexItem(getWidth() / mHorizontalItemCount, getHeight() * 0.3, mCountdownStart));
+	timerFlexBox.items.add(juce::FlexItem(mCountdownLabel).withFlex(2));
+	timerFlexBox.items.add(juce::FlexItem(mCountdownChooser).withFlex(2));
+	timerFlexBox.items.add(juce::FlexItem(mCountdownDisplay).withFlex(3));
+	timerFlexBox.items.add(juce::FlexItem(mCountdownStart).withFlex(3));
 	
-	flexBox.items.add(juce::FlexItem(chooseFlexBox).withFlex(2.5));
-	flexBox.items.add(juce::FlexItem(getWidth() / mHorizontalItemCount, getHeight(), mPlayButton));
-	flexBox.items.add(juce::FlexItem(getWidth() / mHorizontalItemCount, getHeight(), mTempoSlider));
-	flexBox.items.add(juce::FlexItem(getWidth() / mHorizontalItemCount, getHeight(), mVolumeSlider));
-	flexBox.items.add(juce::FlexItem(timerFlexBox).withFlex(2.5));
-	
+	juce::FlexBox flexBox;
+	flexBox.items.add(juce::FlexItem(metronomeFlexBox3).withFlex(3));
+	flexBox.items.add(juce::FlexItem(timerFlexBox).withFlex(1));
 	flexBox.performLayout(bounds);
 	
 }

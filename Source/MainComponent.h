@@ -57,18 +57,22 @@ private:
 	Metronome mMetronome;
 	Countdown mCountdown;
 	
+	juce::Label mMetronomeLabel { {}, "METRONOME" };
 	juce::TextButton mPlayButton { "Play" };
-	juce::Label mChooseLabel { {}, "Choose Sound" };
 	juce::ComboBox mChooseBox { "Choose\n Sound"};
 	juce::Slider mTempoSlider;
 	juce::Slider mVolumeSlider;
-	juce::Label mTempoLabel;
-	juce::Label mVolumeLabel;
+	juce::Label mTempoLabel { {}, "Tempo" };
+	juce::Label mVolumeLabel { {}, "Level" };
+	
 	juce::Label mCountdownLabel { {}, "TIMER" };
 	juce::ComboBox mCountdownChooser { "Choose\n Time" };
 	juce::Label mCountdownDisplay { {}, "0:0" };
 	juce::TextButton mCountdownStart { "Start" };
-	int mHorizontalItemCount { 5 };
+	
+	int mMetronomeHorizontalItemCount { 3 };
+	int mTimerHorizontalItemCount { 1 };
+	int mTotalHorizontalItemCount { mMetronomeHorizontalItemCount + mTimerHorizontalItemCount };
 	
 	MetronomeState mMetronomeState { MetronomeState::Stopped };
 	CountdownState mCountdownState { CountdownState::Stopped };
