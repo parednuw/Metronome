@@ -18,21 +18,29 @@ MainComponent::MainComponent()
 	addAndMakeVisible(&mPlayButton);
 	
 	mTempoSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
-	mTempoSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, false, 60, 30);
+	mTempoSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, false, 50, 30);
 	mTempoSlider.setRange(20, 300, 1);
 	mTempoSlider.setValue(60);
 	mTempoSlider.setNumDecimalPlacesToDisplay(0);
-	mTempoSlider.setTextValueSuffix(" bpm");
+	//mTempoSlider.setTextValueSuffix(" bpm");
 	addAndMakeVisible(&mTempoSlider);
 	
 	mVolumeSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
-	mVolumeSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, false, 60, 30);
-	mVolumeSlider.setSkewFactorFromMidPoint(0.5);
-	mVolumeSlider.setRange(0, 1, 0.00001);
-	mVolumeSlider.setValue(0.3);
-	mVolumeSlider.setNumDecimalPlacesToDisplay(2);
+	mVolumeSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, false, 50, 30);
+	mVolumeSlider.setSkewFactorFromMidPoint(7);
+	mVolumeSlider.setRange(-98, 0, 0.1);
+	mVolumeSlider.setValue(-12);
+	mVolumeSlider.setNumDecimalPlacesToDisplay(1);
 	mVolumeSlider.addListener(&mMetronome);
 	addAndMakeVisible(&mVolumeSlider);
+	
+	mTempoLabel.setText("bpm", juce::dontSendNotification);
+	mTempoLabel.attachToComponent(&mTempoSlider, false);
+	//addAndMakeVisible(&mTempoLabel);
+	
+	mVolumeLabel.setText("dB", juce::dontSendNotification);
+	mVolumeLabel.attachToComponent(&mVolumeSlider, false);
+	//addAndMakeVisible(&mVolumeLabel);
 	
 	mCountdownLabel.setJustificationType(juce::Justification::centred);
 	addAndMakeVisible(&mCountdownLabel);
@@ -176,7 +184,8 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
 	if (mMetronomeState == MetronomeState::Playing)
 		mMetronome.calcWhenPlayFile(bufferToFill);
 
-	float level = mMetronome.getSliderLevel();
+	float level = juce::Decibels::decibelsToGain(mMetronome.getSliderLevel());
+	DBG(level);
 	bufferToFill.buffer->applyGain(bufferToFill.startSample, bufferToFill.numSamples, level);
 	mMetronome.setTempo(MainComponent::mTempoSlider.getValue());
 }
@@ -228,7 +237,6 @@ void MainComponent::resized()
 	
 	flexBox.items.add(juce::FlexItem(chooseFlexBox).withFlex(2.5));
 	flexBox.items.add(juce::FlexItem(getWidth() / mHorizontalItemCount, getHeight(), mPlayButton));
-	//flexBox.items.add(juce::FlexItem(getWidth() / mHorizontalItemCount, getHeight(), mStopButton));
 	flexBox.items.add(juce::FlexItem(getWidth() / mHorizontalItemCount, getHeight(), mTempoSlider));
 	flexBox.items.add(juce::FlexItem(getWidth() / mHorizontalItemCount, getHeight(), mVolumeSlider));
 	flexBox.items.add(juce::FlexItem(timerFlexBox).withFlex(2.5));

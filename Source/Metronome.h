@@ -41,7 +41,7 @@ private:
 	int mBPMInSamples { 0 };
 	double mBPM;
 	int mSamplesRemainder;
-	float mAudioLevel;
+	float mAudioLeveldB;
 	bool firstTrigger { false };
 	bool mIsAudioTriggered { false };
 	

@@ -62,6 +62,8 @@ private:
 	juce::ComboBox mChooseBox { "Choose\n Sound"};
 	juce::Slider mTempoSlider;
 	juce::Slider mVolumeSlider;
+	juce::Label mTempoLabel;
+	juce::Label mVolumeLabel;
 	juce::Label mCountdownLabel { {}, "TIMER" };
 	juce::ComboBox mCountdownChooser { "Choose\n Time" };
 	juce::Label mCountdownDisplay { {}, "0:0" };

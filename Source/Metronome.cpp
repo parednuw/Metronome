@@ -61,15 +61,12 @@ void Metronome::calcWhenPlayFile(const juce::AudioSourceChannelInfo& bufferToFil
 	
 	mTotalSamples += bufferSize;
 	mSamplesRemainder = mTotalSamples % mBPMInSamples;
-	//DBG("Samples remainder: " << mSamplesRemainder);
-	//DBG("Beat Interval: " << mInterval);
 	
 	if ((mSamplesRemainder + bufferSize) >= mBPMInSamples)
 	{
-		const auto timeToStartPlaying = mBPMInSamples - mSamplesRemainder;
+		const int timeToStartPlaying = mBPMInSamples - mSamplesRemainder;
 		pMetronomeSample->setNextReadPosition(0);
-		
-		for (int sample = 0; sample < bufferSize; sample++)
+		for (int sample = 0; sample <= bufferSize; sample++)
 		{
 			if (sample == timeToStartPlaying)
 			{
@@ -108,12 +105,12 @@ void Metronome::hiResTimerCallback()
 //==============================================================================
 void Metronome::sliderValueChanged(juce::Slider *slider)
 {
-	mAudioLevel = slider->getValue();
+	mAudioLeveldB = slider->getValue();
 }
 
 float Metronome::getSliderLevel()
 {
-	return mAudioLevel;
+	return mAudioLeveldB;
 }
 
 void Metronome::setFirstTrigger(bool trigger)
