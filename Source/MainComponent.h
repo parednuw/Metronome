@@ -32,6 +32,7 @@ public:
 	void play();
 	void stop();
 	void chooseSound();
+	void omitClick();
 	void changeMetronomeState();
 	
 	void chooseCountdown();
@@ -57,6 +58,9 @@ private:
 	Metronome mMetronome;
 	Countdown mCountdown;
 	
+	MetronomeState mMetronomeState { MetronomeState::Stopped };
+	CountdownState mCountdownState { CountdownState::Stopped };
+	
 	juce::Label mMetronomeLabel { {}, "METRONOME" };
 	juce::TextButton mPlayButton { "Play" };
 	juce::ComboBox mChooseBox { "Choose\n Sound"};
@@ -64,6 +68,7 @@ private:
 	juce::Slider mVolumeSlider;
 	juce::Label mTempoLabel { {}, "Tempo" };
 	juce::Label mVolumeLabel { {}, "Level" };
+	juce::TextButton mOmitButton { "Omit" };
 	
 	juce::Label mCountdownLabel { {}, "TIMER" };
 	juce::ComboBox mCountdownChooser { "Choose\n Time" };
@@ -74,8 +79,8 @@ private:
 	int mTimerHorizontalItemCount { 1 };
 	int mTotalHorizontalItemCount { mMetronomeHorizontalItemCount + mTimerHorizontalItemCount };
 	
-	MetronomeState mMetronomeState { MetronomeState::Stopped };
-	CountdownState mCountdownState { CountdownState::Stopped };
+	bool omitStatus = false;
+	
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)

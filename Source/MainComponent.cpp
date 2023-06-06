@@ -48,6 +48,12 @@ MainComponent::MainComponent()
 	mMetronomeLabel.setJustificationType(juce::Justification::centred);
 	addAndMakeVisible(&mMetronomeLabel);
 	
+	mOmitButton.setToggleState(false, juce::NotificationType::dontSendNotification);
+	mOmitButton.setRadioGroupId(1);
+	mOmitButton.onClick = [this]() { omitClick(); };
+	mOmitButton.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFF573068));
+	addAndMakeVisible(&mOmitButton);
+	
 	mCountdownChooser.addItem("5", 1);
 	mCountdownChooser.addItem("10", 2);
 	mCountdownChooser.addItem("15", 3);
@@ -97,6 +103,7 @@ void MainComponent::play()
 void MainComponent::stop()
 {
 	mMetronome.resetCountSamples();
+	mMetronome.setOmitCount(1);
 }
 
 void MainComponent::changeMetronomeState()
@@ -126,6 +133,22 @@ void MainComponent::chooseSound()
 	else if (id == 2)
 		mMetronome.setFileToPlay("COWBELL.wav");
 	
+}
+
+void MainComponent::omitClick()
+{
+	if (omitStatus == false)
+	{
+		omitStatus = true;
+		mMetronome.setOmitCount(0);
+		mOmitButton.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFF003068));
+	}
+	else if (omitStatus == true)
+	{
+		omitStatus = false;
+		mOmitButton.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFF573068));
+		
+	}
 }
 
 void MainComponent::chooseCountdown()
@@ -194,6 +217,13 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
 		mMetronome.calcWhenPlayFile(bufferToFill);
 
 	float level = juce::Decibels::decibelsToGain(mMetronome.getSliderLevel());
+	
+	if (omitStatus && mMetronome.getOmitCount() > 4)
+	{
+		level = 0;
+		if (mMetronome.getOmitCount() == 9)
+			mMetronome.setOmitCount(1);
+	}
 	bufferToFill.buffer->applyGain(bufferToFill.startSample, bufferToFill.numSamples, level);
 	mMetronome.setTempo(MainComponent::mTempoSlider.getValue());
 }
@@ -231,8 +261,9 @@ void MainComponent::resized()
 	
 	juce::FlexBox metronomeFlexBox1;
 	metronomeFlexBox1.flexDirection = juce::FlexBox::Direction::column;
-	metronomeFlexBox1.items.add(juce::FlexItem(mChooseBox).withFlex(3));
-	metronomeFlexBox1.items.add(juce::FlexItem(mPlayButton).withFlex(7));
+	metronomeFlexBox1.items.add(juce::FlexItem(mChooseBox).withFlex(2));
+	metronomeFlexBox1.items.add(juce::FlexItem(mOmitButton).withFlex(2));
+	metronomeFlexBox1.items.add(juce::FlexItem(mPlayButton).withFlex(4));
 	
 	juce::FlexBox tempoSliderFlexBox;
 	tempoSliderFlexBox.flexDirection = juce::FlexBox::Direction::column;

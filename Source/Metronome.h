@@ -25,6 +25,9 @@ public:
 	void hiResTimerCallback() override;
 	
 	void setTempo(double newTempo);
+	void setOmitCount(int value);
+	int getOmitCount();
+	//void omitCounterAdd1(int maxOmit);
 	
 	void setFileToPlay(const juce::String& nameOfFileToPlay);
 	void setmSamples(juce::Array<juce::File> mSamplesFromChooser);
@@ -35,6 +38,14 @@ public:
 	void setFirstTrigger(bool trigger);
 	bool getIsAudioTriggered();
 	
+	/*enum OmitSelection
+	{
+		One = 1,
+		Two = 2,
+		Three = 3,
+		Four = 4
+	};*/
+	
 private:
 	int mTotalSamples { 0 };
 	double mSampleRate { 0 };
@@ -44,6 +55,9 @@ private:
 	float mAudioLeveldB;
 	bool firstTrigger { false };
 	bool mIsAudioTriggered { false };
+	
+	int mOmitCount { 1 };
+	//OmitSelection omitSelection;
 	
 	juce::AudioFormatManager mFormatManager;
 	std::unique_ptr <juce::AudioFormatReaderSource> pMetronomeSample {nullptr};

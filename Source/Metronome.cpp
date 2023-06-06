@@ -43,7 +43,7 @@ void Metronome::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 	if (pMetronomeSample != nullptr)
 	{
 		pMetronomeSample->prepareToPlay(samplesPerBlockExpected, sampleRate);
-		DBG("File loaded.");
+		//DBG("File loaded.");
 	}
 }
 
@@ -71,6 +71,8 @@ void Metronome::calcWhenPlayFile(const juce::AudioSourceChannelInfo& bufferToFil
 			if (sample == timeToStartPlaying)
 			{
 				//DBG("#########\n" << "CLICK\n" << "Total Samples: " << mTotalSamples << "\n#########");
+				mOmitCount += 1;
+				DBG(mOmitCount);
 				pMetronomeSample->getNextAudioBlock(bufferToFill);
 			}
 		}
@@ -96,6 +98,23 @@ void Metronome::setTempo(double newTempo)
 {
 	mBPM = newTempo;
 }
+
+void Metronome::setOmitCount(int value)
+{
+	mOmitCount = value;
+}
+
+int Metronome::getOmitCount()
+{
+	return mOmitCount;
+}
+
+/*void Metronome::omitCounterAdd1(int maxOmit)
+{
+	mOmitCount += 1;
+	if (mOmitCount == maxOmit)
+		mOmitCount = 0;
+}*/
 
 void Metronome::hiResTimerCallback()
 {
