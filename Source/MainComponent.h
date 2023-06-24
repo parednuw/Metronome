@@ -1,7 +1,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "Countdown.h"
+#include "PracticeTimer.h"
 #include "Metronome.h"
 
 //==============================================================================
@@ -26,7 +26,7 @@ public:
     void paint (juce::Graphics& g) override;
     void resized() override;
 	void repaint();
-	void updateCountdownDisplay();
+	void updatePracticeTimerDisplay();
 	
 	
 	void play();
@@ -35,10 +35,10 @@ public:
 	void omitClick();
 	void changeMetronomeState();
 	
-	void chooseCountdown();
-	void startCountdown();
-	void stopCountdown();
-	void changeCountdownState();
+	void choosePracticeTime();
+	void startPracticeTimer();
+	void stopPracticeTimer();
+	void changePracticeTimerState();
 	
 	void timerCallback() override;
 	
@@ -48,7 +48,7 @@ public:
 		Stopped
 	};
 	
-	enum class CountdownState
+	enum class PracticeTimerState
 	{
 		Counting,
 		Stopped
@@ -56,10 +56,10 @@ public:
 	
 private:
 	Metronome mMetronome;
-	Countdown mCountdown;
+	PracticeTimer mPracticeTimer;
 	
 	MetronomeState mMetronomeState { MetronomeState::Stopped };
-	CountdownState mCountdownState { CountdownState::Stopped };
+	PracticeTimerState mPracticeTimerState { PracticeTimerState::Stopped };
 	
 	juce::Label mMetronomeLabel { {}, "METRONOME" };
 	juce::TextButton mPlayButton { "Play" };
@@ -70,10 +70,10 @@ private:
 	juce::Label mVolumeLabel { {}, "Level" };
 	juce::TextButton mOmitButton { "Omit" };
 	
-	juce::Label mCountdownLabel { {}, "TIMER" };
-	juce::ComboBox mCountdownChooser { "Choose\n Time" };
-	juce::Label mCountdownDisplay { {}, "0:0" };
-	juce::TextButton mCountdownStart { "Start" };
+	juce::Label mPracticeTimerLabel { {}, "TIMER" };
+	juce::ComboBox mPracticeTimerChooser { "Choose\n Time" };
+	juce::Label mPracticeTimerDisplay { {}, "0:00" };
+	juce::TextButton mPracticeTimerStart { "Start" };
 	
 	int mMetronomeHorizontalItemCount { 3 };
 	int mTimerHorizontalItemCount { 1 };

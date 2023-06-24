@@ -42,8 +42,8 @@ MainComponent::MainComponent()
 	mVolumeLabel.setJustificationType(juce::Justification::centred);
 	addAndMakeVisible(&mVolumeLabel);
 	
-	mCountdownLabel.setJustificationType(juce::Justification::centred);
-	addAndMakeVisible(&mCountdownLabel);
+	mPracticeTimerLabel.setJustificationType(juce::Justification::centred);
+	addAndMakeVisible(&mPracticeTimerLabel);
 	
 	mMetronomeLabel.setJustificationType(juce::Justification::centred);
 	addAndMakeVisible(&mMetronomeLabel);
@@ -54,23 +54,23 @@ MainComponent::MainComponent()
 	mOmitButton.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFF573068));
 	addAndMakeVisible(&mOmitButton);
 	
-	mCountdownChooser.addItem("5", 1);
-	mCountdownChooser.addItem("10", 2);
-	mCountdownChooser.addItem("15", 3);
-	mCountdownChooser.addItem("20", 4);
-	mCountdownChooser.addItem("25", 5);
-	mCountdownChooser.addItem("30", 6);
-	mCountdownChooser.setJustificationType(juce::Justification::centred);
-	mCountdownChooser.setSelectedId(1);
-	mCountdownChooser.onChange = [this]() { chooseCountdown(); };
-	addAndMakeVisible(&mCountdownChooser);
+	mPracticeTimerChooser.addItem("5", 1);
+	mPracticeTimerChooser.addItem("10", 2);
+	mPracticeTimerChooser.addItem("15", 3);
+	mPracticeTimerChooser.addItem("20", 4);
+	mPracticeTimerChooser.addItem("25", 5);
+	mPracticeTimerChooser.addItem("30", 6);
+	mPracticeTimerChooser.setJustificationType(juce::Justification::centred);
+	mPracticeTimerChooser.setSelectedId(1);
+	mPracticeTimerChooser.onChange = [this]() { choosePracticeTime(); };
+	addAndMakeVisible(&mPracticeTimerChooser);
 	
-	mCountdownDisplay.setJustificationType(juce::Justification::centred);
-	addAndMakeVisible(&mCountdownDisplay);
+	mPracticeTimerDisplay.setJustificationType(juce::Justification::centred);
+	addAndMakeVisible(&mPracticeTimerDisplay);
 	
-	mCountdownStart.onClick = [this]() { changeCountdownState(); };
-	mCountdownStart.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFFABC0A8));
-	addAndMakeVisible(&mCountdownStart);
+	mPracticeTimerStart.onClick = [this]() { changePracticeTimerState(); };
+	mPracticeTimerStart.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFFABC0A8));
+	addAndMakeVisible(&mPracticeTimerStart);
 	
 	Timer::startTimerHz(60);
 	
@@ -153,55 +153,55 @@ void MainComponent::omitClick()
 	}
 }
 
-void MainComponent::chooseCountdown()
+void MainComponent::choosePracticeTime()
 {
-	mCountdown.resetCountdown();
+	mPracticeTimer.resetPracticeTimer();
 	
-	mCountdown.countdownEnabled = false;	//these two lines of code are not very elegant. This related to stopCountdown --> chooseCountdown
-	mCountdownStart.setButtonText("Start");		//
+	mPracticeTimer.practiceTimerEnabled = false;	//these two lines of code are not very elegant. This related to stopCountdown --> chooseCountdown
+	mPracticeTimerStart.setButtonText("Start");		//
 	
-	int id = mCountdownChooser.getSelectedId();
+	int id = mPracticeTimerChooser.getSelectedId();
 	if (id == 1)
-		mCountdown.setCountdown(5);
+		mPracticeTimer.setPracticeTimer(5);
 	if (id == 2)
-		mCountdown.setCountdown(10);
+		mPracticeTimer.setPracticeTimer(10);
 	if (id == 3)
-		mCountdown.setCountdown(15);
+		mPracticeTimer.setPracticeTimer(15);
 	if (id == 4)
-		mCountdown.setCountdown(20);
+		mPracticeTimer.setPracticeTimer(20);
 	if (id == 5)
-		mCountdown.setCountdown(25);
+		mPracticeTimer.setPracticeTimer(25);
 	if (id == 6)
-		mCountdown.setCountdown(30);
+		mPracticeTimer.setPracticeTimer(30);
 }
 
-void MainComponent::startCountdown()
+void MainComponent::startPracticeTimer()
 {
-	mCountdown.startTimer(1000);
-	mCountdown.countdownEnabled = true;
+	mPracticeTimer.startTimer(1000);
+	mPracticeTimer.practiceTimerEnabled = true;
 }
 
-void MainComponent::stopCountdown()
+void MainComponent::stopPracticeTimer()
 {
-	mCountdown.countdownEnabled = false;
-	chooseCountdown();
+	mPracticeTimer.practiceTimerEnabled = false;
+	choosePracticeTime();
 }
 
-void MainComponent::changeCountdownState()
+void MainComponent::changePracticeTimerState()
 {
-	if (mCountdown.countdownEnabled == false)
+	if (mPracticeTimer.practiceTimerEnabled == false)
 	{
-		mCountdown.countdownEnabled = true;
-		mCountdownStart.setButtonText("Stop");
-		mCountdownStart.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFFC52121));
-		startCountdown();
+		mPracticeTimer.practiceTimerEnabled = true;
+		mPracticeTimerStart.setButtonText("Stop");
+		mPracticeTimerStart.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFFC52121));
+		startPracticeTimer();
 	}
-	else if (mCountdown.countdownEnabled == true)
+	else if (mPracticeTimer.practiceTimerEnabled == true)
 	{
-		mCountdown.countdownEnabled = false;
-		mCountdownStart.setButtonText("Start");
-		mCountdownStart.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFFC52121));
-		stopCountdown();
+		mPracticeTimer.practiceTimerEnabled = false;
+		mPracticeTimerStart.setButtonText("Start");
+		mPracticeTimerStart.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFFC52121));
+		stopPracticeTimer();
 	}
 }
 
@@ -242,19 +242,19 @@ void MainComponent::releaseResources()
 
 void MainComponent::timerCallback()
 {
-	updateCountdownDisplay();
+	updatePracticeTimerDisplay();
 	
-	if(!mCountdown.countdownEnabled)
+	if(!mPracticeTimer.practiceTimerEnabled)
 	{
-		mCountdownStart.setButtonText("Start");
-		mCountdownStart.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFF35C521));
+		mPracticeTimerStart.setButtonText("Start");
+		mPracticeTimerStart.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFF35C521));
 	}
 }
 
-void MainComponent::updateCountdownDisplay()
+void MainComponent::updatePracticeTimerDisplay()
 {
-	juce::String string = mCountdown.getCountdownAsFormattedString();
-	mCountdownDisplay.setText(string, juce::NotificationType::dontSendNotification);
+	juce::String string = mPracticeTimer.getPracticeTimerAsFormattedString();
+	mPracticeTimerDisplay.setText(string, juce::NotificationType::dontSendNotification);
 }
 
 
@@ -296,10 +296,10 @@ void MainComponent::resized()
 	
 	juce::FlexBox timerFlexBox;
 	timerFlexBox.flexDirection = juce::FlexBox::Direction::column;
-	timerFlexBox.items.add(juce::FlexItem(mCountdownLabel).withFlex(2));
-	timerFlexBox.items.add(juce::FlexItem(mCountdownChooser).withFlex(2));
-	timerFlexBox.items.add(juce::FlexItem(mCountdownDisplay).withFlex(3));
-	timerFlexBox.items.add(juce::FlexItem(mCountdownStart).withFlex(3));
+	timerFlexBox.items.add(juce::FlexItem(mPracticeTimerLabel).withFlex(2));
+	timerFlexBox.items.add(juce::FlexItem(mPracticeTimerChooser).withFlex(2));
+	timerFlexBox.items.add(juce::FlexItem(mPracticeTimerDisplay).withFlex(3));
+	timerFlexBox.items.add(juce::FlexItem(mPracticeTimerStart).withFlex(3));
 	
 	juce::FlexBox flexBox;
 	flexBox.items.add(juce::FlexItem(metronomeFlexBox3).withFlex(3));
