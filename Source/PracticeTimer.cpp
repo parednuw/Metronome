@@ -10,7 +10,7 @@
 
 #include "PracticeTimer.h"
 
-PracticeTimer::PracticeTimer()
+PracticeTimer::PracticeTimer() : practiceTimerEnabled(false)
 {
 	
 }

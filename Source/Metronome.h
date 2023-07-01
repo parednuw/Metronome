@@ -21,8 +21,6 @@ public:
 	void calcWhenPlayFile(const juce::AudioSourceChannelInfo&);
 	void resetCountSamples();
 	
-	void hiResTimerCallback() override;
-	
 	void setTempo(double newTempo);
 	void setOmitCount(int value);
 	int getOmitCount();
@@ -37,6 +35,8 @@ public:
 	bool getIsAudioTriggered();
 	
 private:
+	void hiResTimerCallback() override;
+	
 	int mTotalSamples;
 	double mSampleRate;
 	int mBPMInSamples;
