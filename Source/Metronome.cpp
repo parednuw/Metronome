@@ -19,7 +19,7 @@ Metronome::Metronome()
 
 void Metronome::setFileToPlay(const juce::String& nameOfFileToPlay)
 {
-	juce::File fileToPlayDir { "/Users/paulwunder/Dev/Projects/Metronome/Audio"};	//Replace path with your path to "/Metronome/Audio"
+	juce::File fileToPlayDir { "/Users/paulwunder/Dev/Projects/Metronome/Audio"};
 	auto mSamples = fileToPlayDir.findChildFiles(juce::File::TypesOfFileToFind::findFiles, true, nameOfFileToPlay);
 	jassert(mSamples[0].exists());
 	
@@ -33,7 +33,6 @@ void Metronome::setmSamples(juce::Array<juce::File> mSamplesFromChooser)
 	pMetronomeSample.reset(new juce::AudioFormatReaderSource(formatReader, true));
 }
 
-//==============================================================================
 void Metronome::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 {
 	mSampleRate = sampleRate;
@@ -87,7 +86,6 @@ void Metronome::calcWhenPlayFile(const juce::AudioSourceChannelInfo& bufferToFil
 	
 }
 
-//==============================================================================
 void Metronome::resetCountSamples()
 {
 	mTotalSamples = 0;
@@ -109,19 +107,11 @@ int Metronome::getOmitCount()
 	return mOmitCount;
 }
 
-/*void Metronome::omitCounterAdd1(int maxOmit)
-{
-	mOmitCount += 1;
-	if (mOmitCount == maxOmit)
-		mOmitCount = 0;
-}*/
-
 void Metronome::hiResTimerCallback()
 {
 	mBPMInSamples = 60.0 / mBPM * mSampleRate;
 }
 
-//==============================================================================
 void Metronome::sliderValueChanged(juce::Slider *slider)
 {
 	mAudioLeveldB = slider->getValue();

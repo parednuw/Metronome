@@ -76,7 +76,6 @@ MainComponent::MainComponent()
 	
     setSize (400, 300);
 
-    // Some platforms require permissions to open input channels so request that here
     if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
         && ! juce::RuntimePermissions::isGranted (juce::RuntimePermissions::recordAudio))
     {
@@ -157,8 +156,8 @@ void MainComponent::choosePracticeTime()
 {
 	mPracticeTimer.resetPracticeTimer();
 	
-	mPracticeTimer.practiceTimerEnabled = false;	//these two lines of code are not very elegant. This related to stopCountdown --> chooseCountdown
-	mPracticeTimerStart.setButtonText("Start");		//
+	mPracticeTimer.practiceTimerEnabled = false;
+	mPracticeTimerStart.setButtonText("Start");
 	
 	int id = mPracticeTimerChooser.getSelectedId();
 	if (id == 1)
@@ -205,7 +204,6 @@ void MainComponent::changePracticeTimerState()
 	}
 }
 
-//==============================================================================
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
 	mMetronome.prepareToPlay(samplesPerBlockExpected, sampleRate);
@@ -237,8 +235,6 @@ void MainComponent::releaseResources()
 {
 
 }
-
-//==============================================================================
 
 void MainComponent::timerCallback()
 {
