@@ -53,25 +53,25 @@ private:
 	MetronomeState mMetronomeState { MetronomeState::Stopped };
 	PracticeTimerState mPracticeTimerState { PracticeTimerState::Stopped };
 	
-	juce::Label mMetronomeLabel { {}, "METRONOME" };
-	juce::TextButton mPlayButton { "Play" };
-	juce::ComboBox mChooseBox { "Choose\n Sound"};
+	juce::Label mMetronomeLabel;
+	juce::TextButton mPlayButton;
+	juce::ComboBox mChooseBox;
 	juce::Slider mTempoSlider;
 	juce::Slider mVolumeSlider;
-	juce::Label mTempoLabel { {}, "Tempo" };
-	juce::Label mVolumeLabel { {}, "Level" };
-	juce::TextButton mOmitButton { "Omit" };
+	juce::Label mTempoLabel;
+	juce::Label mVolumeLabel;
+	juce::TextButton mOmitButton;
 	
-	juce::Label mPracticeTimerLabel { {}, "TIMER" };
-	juce::ComboBox mPracticeTimerChooser { "Choose\n Time" };
-	juce::Label mPracticeTimerDisplay { {}, "0:00" };
-	juce::TextButton mPracticeTimerStart { "Start" };
+	juce::Label mPracticeTimerLabel;
+	juce::ComboBox mPracticeTimerChooser;
+	juce::Label mPracticeTimerDisplay;
+	juce::TextButton mPracticeTimerStart;
 	
-	int mMetronomeHorizontalItemCount { 3 };
-	int mTimerHorizontalItemCount { 1 };
-	int mTotalHorizontalItemCount { mMetronomeHorizontalItemCount + mTimerHorizontalItemCount };
+	int mMetronomeHorizontalItemCount;
+	int mTimerHorizontalItemCount;
+	int mTotalHorizontalItemCount;
 	
-	bool omitStatus = false;
+	bool omitStatus;
 	
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

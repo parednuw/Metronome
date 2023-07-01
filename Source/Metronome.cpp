@@ -10,7 +10,7 @@
 
 #include "Metronome.h"
 
-Metronome::Metronome()
+Metronome::Metronome() : mTotalSamples(0), mSampleRate(0), mBPMInSamples(0), firstTrigger(false), mIsAudioTriggered(false), mOmitCount(1), pMetronomeSample(nullptr)
 {
 	mFormatManager.registerBasicFormats();
 	

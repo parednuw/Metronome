@@ -1,6 +1,6 @@
 #include "MainComponent.h"
 
-MainComponent::MainComponent()
+MainComponent::MainComponent() : mPlayButton({"Play"}), mTempoLabel( {}, "Tempo"), mVolumeLabel({}, "Level"), mOmitButton({"Omit"}), mMetronomeLabel({}, "METRONOME"), mPracticeTimerLabel({}, "TIMER"), mPracticeTimerDisplay({}, "0:00"), mPracticeTimerStart({"Start"}), mMetronomeHorizontalItemCount(3), mTimerHorizontalItemCount(1), omitStatus(false)
 {
 	
 	mChooseBox.addItem("SWNB", 1);
@@ -86,6 +86,8 @@ MainComponent::MainComponent()
     {
         setAudioChannels (0, 2);
     }
+	
+	mTotalHorizontalItemCount = mMetronomeHorizontalItemCount + mTimerHorizontalItemCount;
 }
 
 MainComponent::~MainComponent()
