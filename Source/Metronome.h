@@ -1,19 +1,18 @@
 /*
-  ==============================================================================
-
-    Metronome.h
-    Created: 28 Feb 2022 5:45:28pm
-    Author:  Paul Wunder
-
-  ==============================================================================
-*/
+ ==============================================================================
+ 
+ Metronome.h
+ Created: 28 Feb 2022 5:45:28pm
+ Author:  Paul Wunder
+ 
+ ==============================================================================
+ */
 
 #pragma once
 
 #include <JuceHeader.h>
 
-class Metronome : public juce::HighResolutionTimer,
-				  public juce::Slider::Listener
+class Metronome : public juce::HighResolutionTimer, public juce::Slider::Listener
 {
 public:
 	Metronome();
@@ -30,7 +29,7 @@ public:
 	
 	void setFileToPlay(const juce::String& nameOfFileToPlay);
 	void setmSamples(juce::Array<juce::File> mSamplesFromChooser);
-
+	
 	void sliderValueChanged(juce::Slider *slider) override;
 	float getSliderLevel();
 	

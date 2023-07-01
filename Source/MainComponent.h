@@ -4,22 +4,20 @@
 #include "PracticeTimer.h"
 #include "Metronome.h"
 
-class MainComponent : public juce::AudioAppComponent,
-					  public juce::Timer
+class MainComponent : public juce::AudioAppComponent, public juce::Timer
 {
 public:
-    MainComponent();
-    ~MainComponent() override;
-
-    void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
-    void getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill) override;
-    void releaseResources() override;
-
-    void paint (juce::Graphics& g) override;
-    void resized() override;
+	MainComponent();
+	~MainComponent() override;
+	
+	void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
+	void getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill) override;
+	void releaseResources() override;
+	
+	void paint (juce::Graphics& g) override;
+	void resized() override;
 	void repaint();
 	void updatePracticeTimerDisplay();
-	
 	
 	void play();
 	void stop();
@@ -73,5 +71,5 @@ private:
 	
 	bool omitStatus;
 	
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

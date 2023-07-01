@@ -1,12 +1,12 @@
 /*
-  ==============================================================================
-
-    Metronome.cpp
-    Created: 28 Feb 2022 5:45:28pm
-    Author:  Paul Wunder
-
-  ==============================================================================
-*/
+ ==============================================================================
+ 
+ Metronome.cpp
+ Created: 28 Feb 2022 5:45:28pm
+ Author:  Paul Wunder
+ 
+ ==============================================================================
+ */
 
 #include "Metronome.h"
 
@@ -49,7 +49,7 @@ void Metronome::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 void Metronome::calcWhenPlayFile(const juce::AudioSourceChannelInfo& bufferToFill)
 {
 	auto bufferSize = bufferToFill.numSamples;
-
+	
 	if (firstTrigger == true)
 	{
 		pMetronomeSample->setNextReadPosition(0);
@@ -83,13 +83,11 @@ void Metronome::calcWhenPlayFile(const juce::AudioSourceChannelInfo& bufferToFil
 	{
 		pMetronomeSample->getNextAudioBlock(bufferToFill);
 	}
-	
 }
 
 void Metronome::resetCountSamples()
 {
 	mTotalSamples = 0;
-
 }
 
 void Metronome::setTempo(double newTempo)

@@ -74,18 +74,18 @@ MainComponent::MainComponent() : mPlayButton({"Play"}), mTempoLabel( {}, "Tempo"
 	
 	Timer::startTimerHz(60);
 	
-    setSize (400, 300);
-
-    if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
-        && ! juce::RuntimePermissions::isGranted (juce::RuntimePermissions::recordAudio))
-    {
-        juce::RuntimePermissions::request (juce::RuntimePermissions::recordAudio,
-                                           [&] (bool granted) { setAudioChannels (granted ? 2 : 0, 2); });
-    }
-    else
-    {
-        setAudioChannels (0, 2);
-    }
+	setSize (400, 300);
+	
+	if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
+		&& ! juce::RuntimePermissions::isGranted (juce::RuntimePermissions::recordAudio))
+	{
+		juce::RuntimePermissions::request (juce::RuntimePermissions::recordAudio,
+										   [&] (bool granted) { setAudioChannels (granted ? 2 : 0, 2); });
+	}
+	else
+	{
+		setAudioChannels (0, 2);
+	}
 	
 	mTotalHorizontalItemCount = mMetronomeHorizontalItemCount + mTimerHorizontalItemCount;
 }
@@ -213,11 +213,11 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
 {
-    bufferToFill.clearActiveBufferRegion();
-
+	bufferToFill.clearActiveBufferRegion();
+	
 	if (mMetronomeState == MetronomeState::Playing)
 		mMetronome.calcWhenPlayFile(bufferToFill);
-
+	
 	float level = juce::Decibels::decibelsToGain(mMetronome.getSliderLevel());
 	
 	int numberOfClicksToOmit = 5;
@@ -235,7 +235,7 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
 
 void MainComponent::releaseResources()
 {
-
+	
 }
 
 void MainComponent::timerCallback()
@@ -258,7 +258,7 @@ void MainComponent::updatePracticeTimerDisplay()
 
 void MainComponent::paint (juce::Graphics& g)
 {
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+	g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
 }
 
 void MainComponent::resized()
