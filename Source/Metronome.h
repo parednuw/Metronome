@@ -38,19 +38,19 @@ public:
 	bool getIsAudioTriggered();
 	
 private:
-	int mTotalSamples { 0 };
-	double mSampleRate { 0 };
-	int mBPMInSamples { 0 };
+	int mTotalSamples;
+	double mSampleRate;
+	int mBPMInSamples;
 	double mBPM;
 	int mSamplesRemainder;
 	float mAudioLeveldB;
-	bool firstTrigger { false };
-	bool mIsAudioTriggered { false };
+	bool firstTrigger;
+	bool mIsAudioTriggered;
 	
-	int mOmitCount { 1 };
+	int mOmitCount;
 	
 	juce::AudioFormatManager mFormatManager;
-	std::unique_ptr <juce::AudioFormatReaderSource> pMetronomeSample {nullptr};
+	std::unique_ptr <juce::AudioFormatReaderSource> pMetronomeSample;
 	
 	juce::Array<juce::File> mSamples;
 };
