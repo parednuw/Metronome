@@ -30,8 +30,6 @@ public:
 	void stopPracticeTimer();
 	void changePracticeTimerState();
 	
-	void timerCallback() override;
-	
 	enum class MetronomeState
 	{
 		Playing,
@@ -45,6 +43,8 @@ public:
 	};
 	
 private:
+	void timerCallback() override;
+	
 	Metronome mMetronome;
 	PracticeTimer mPracticeTimer;
 	

@@ -22,16 +22,15 @@ public:
 	void resetPracticeTimer();
 	int practiceTimerMinToSec(int timeInMin);
 	
-	void timerCallback() override;
-	
 	int getPracticeTimerInSec();
 	juce::String getPracticeTimerInSecAsString();
 	juce::String getPracticeTimerAsFormattedString();
 	
-	bool practiceTimerEnabled = false;
+	bool practiceTimerEnabled;
 	
 private:
 	void counter();
+	void timerCallback() override;
 	
 	int mPracticeTimerInMin;
 	int mPracticeTimerInSec;
