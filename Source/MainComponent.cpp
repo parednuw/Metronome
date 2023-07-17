@@ -54,14 +54,13 @@ MainComponent::MainComponent() : mPlayButton({"Play"}), mTempoLabel( {}, "Tempo"
 	mOmitButton.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFF573068));
 	addAndMakeVisible(&mOmitButton);
 	
-	mPracticeTimerChooser.addItem("5", 1);
-	mPracticeTimerChooser.addItem("10", 2);
-	mPracticeTimerChooser.addItem("15", 3);
-	mPracticeTimerChooser.addItem("20", 4);
-	mPracticeTimerChooser.addItem("25", 5);
-	mPracticeTimerChooser.addItem("30", 6);
-	mPracticeTimerChooser.setJustificationType(juce::Justification::centred);
+	int itemCount = 6;
+	for (int i = 1; i <= itemCount; i++)
+	{
+		mPracticeTimerChooser.addItem(std::to_string(5 * i), i);
+	}
 	mPracticeTimerChooser.setSelectedId(1);
+	mPracticeTimerChooser.setJustificationType(juce::Justification::centred);
 	mPracticeTimerChooser.onChange = [this]() { choosePracticeTime(); };
 	addAndMakeVisible(&mPracticeTimerChooser);
 	
@@ -150,7 +149,6 @@ void MainComponent::omitClick()
 		mOmitStatus = false;
 		mOmitButton.setButtonText("Omit");
 		mOmitButton.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFF573068));
-		
 	}
 }
 
@@ -162,18 +160,7 @@ void MainComponent::choosePracticeTime()
 	mPracticeTimerStart.setButtonText("Start");
 	
 	int id = mPracticeTimerChooser.getSelectedId();
-	if (id == 1)
-		mPracticeTimer.setPracticeTimer(5);
-	if (id == 2)
-		mPracticeTimer.setPracticeTimer(10);
-	if (id == 3)
-		mPracticeTimer.setPracticeTimer(15);
-	if (id == 4)
-		mPracticeTimer.setPracticeTimer(20);
-	if (id == 5)
-		mPracticeTimer.setPracticeTimer(25);
-	if (id == 6)
-		mPracticeTimer.setPracticeTimer(30);
+	mPracticeTimer.setPracticeTimer(5 * id);
 }
 
 void MainComponent::startPracticeTimer()
