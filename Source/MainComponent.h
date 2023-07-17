@@ -69,7 +69,7 @@ private:
 	int mTimerHorizontalItemCount;
 	int mTotalHorizontalItemCount;
 	
-	bool omitStatus;
+	bool mOmitStatus;
 	
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

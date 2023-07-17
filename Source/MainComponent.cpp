@@ -1,6 +1,6 @@
 #include "MainComponent.h"
 
-MainComponent::MainComponent() : mPlayButton({"Play"}), mTempoLabel( {}, "Tempo"), mVolumeLabel({}, "Level"), mOmitButton({"Omit"}), mMetronomeLabel({}, "METRONOME"), mPracticeTimerLabel({}, "TIMER"), mPracticeTimerDisplay({}, "0:00"), mPracticeTimerStart({"Start"}), mMetronomeHorizontalItemCount(3), mTimerHorizontalItemCount(1), omitStatus(false)
+MainComponent::MainComponent() : mPlayButton({"Play"}), mTempoLabel( {}, "Tempo"), mVolumeLabel({}, "Level"), mOmitButton({"Omit"}), mMetronomeLabel({}, "METRONOME"), mPracticeTimerLabel({}, "TIMER"), mPracticeTimerDisplay({}, "0:00"), mPracticeTimerStart({"Start"}), mMetronomeHorizontalItemCount(3), mTimerHorizontalItemCount(1), mOmitStatus(false)
 {
 	
 	mChooseBox.addItem("SWNB", 1);
@@ -138,16 +138,16 @@ void MainComponent::chooseSound()
 
 void MainComponent::omitClick()
 {
-	if (omitStatus == false)
+	if (mOmitStatus == false)
 	{
-		omitStatus = true;
+		mOmitStatus = true;
 		mMetronome.setOmitCount(0);
 		mOmitButton.setButtonText("Omitting");
 		mOmitButton.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFF003068));
 	}
-	else if (omitStatus == true)
+	else if (mOmitStatus == true)
 	{
-		omitStatus = false;
+		mOmitStatus = false;
 		mOmitButton.setButtonText("Omit");
 		mOmitButton.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFF573068));
 		
@@ -222,7 +222,7 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
 	
 	int numberOfClicksToOmit = 5;
 	
-	if (omitStatus && mMetronome.getOmitCount() > numberOfClicksToOmit)
+	if (mOmitStatus && mMetronome.getOmitCount() > numberOfClicksToOmit)
 	{
 		level = 0;
 		if (mMetronome.getOmitCount() == (numberOfClicksToOmit * 2 + 1))
