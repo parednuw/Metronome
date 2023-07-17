@@ -10,7 +10,7 @@
 
 #include "Metronome.h"
 
-Metronome::Metronome() : mTotalSamples(0), mSampleRate(0), mBPMInSamples(0), firstTrigger(false), mIsAudioTriggered(false), mOmitCount(1), pMetronomeSample(nullptr)
+Metronome::Metronome() : mTotalSamples(0), mSampleRate(0), mBPMInSamples(0), mFirstTrigger(false), mIsAudioTriggered(false), mOmitCount(1), mMetronomeSample(nullptr)
 {
 	mFormatManager.registerBasicFormats();
 	
@@ -30,7 +30,7 @@ void Metronome::setmSamples(juce::Array<juce::File> mSamplesFromChooser)
 {
 	mSamples = mSamplesFromChooser;
 	auto formatReader = mFormatManager.createReaderFor(mSamples[0]);
-	pMetronomeSample.reset(new juce::AudioFormatReaderSource(formatReader, true));
+	mMetronomeSample.reset(new juce::AudioFormatReaderSource(formatReader, true));
 }
 
 void Metronome::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
@@ -39,9 +39,9 @@ void Metronome::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 	mBPMInSamples = 60.0 / mBPM * mSampleRate;
 	juce::HighResolutionTimer::startTimer(100);
 	
-	if (pMetronomeSample != nullptr)
+	if (mMetronomeSample != nullptr)
 	{
-		pMetronomeSample->prepareToPlay(samplesPerBlockExpected, sampleRate);
+		mMetronomeSample->prepareToPlay(samplesPerBlockExpected, sampleRate);
 		//DBG("File loaded.");
 	}
 }
@@ -50,13 +50,13 @@ void Metronome::calcWhenPlayFile(const juce::AudioSourceChannelInfo& bufferToFil
 {
 	auto bufferSize = bufferToFill.numSamples;
 	
-	if (firstTrigger == true)
+	if (mFirstTrigger == true)
 	{
-		pMetronomeSample->setNextReadPosition(0);
-		pMetronomeSample->getNextAudioBlock(bufferToFill);
+		mMetronomeSample->setNextReadPosition(0);
+		mMetronomeSample->getNextAudioBlock(bufferToFill);
 	}
 	
-	firstTrigger = false;
+	mFirstTrigger = false;
 	
 	mTotalSamples += bufferSize;
 	mSamplesRemainder = mTotalSamples % mBPMInSamples;
@@ -64,7 +64,7 @@ void Metronome::calcWhenPlayFile(const juce::AudioSourceChannelInfo& bufferToFil
 	if ((mSamplesRemainder + bufferSize) >= mBPMInSamples)
 	{
 		const int timeToStartPlaying = mBPMInSamples - mSamplesRemainder;
-		pMetronomeSample->setNextReadPosition(0);
+		mMetronomeSample->setNextReadPosition(0);
 		for (int sample = 0; sample <= bufferSize; sample++)
 		{
 			if (sample == timeToStartPlaying)
@@ -72,16 +72,16 @@ void Metronome::calcWhenPlayFile(const juce::AudioSourceChannelInfo& bufferToFil
 				//DBG("#########\n" << "CLICK\n" << "Total Samples: " << mTotalSamples << "\n#########");
 				mOmitCount += 1;
 				DBG(mOmitCount);
-				pMetronomeSample->getNextAudioBlock(bufferToFill);
+				mMetronomeSample->getNextAudioBlock(bufferToFill);
 			}
 		}
 		
 		mTotalSamples = 0;
 	}
 	
-	if (pMetronomeSample->getNextReadPosition() != 0)
+	if (mMetronomeSample->getNextReadPosition() != 0)
 	{
-		pMetronomeSample->getNextAudioBlock(bufferToFill);
+		mMetronomeSample->getNextAudioBlock(bufferToFill);
 	}
 }
 
@@ -122,6 +122,6 @@ float Metronome::getSliderLevel()
 
 void Metronome::setFirstTrigger(bool trigger)
 {
-	firstTrigger = trigger;
+	mFirstTrigger = trigger;
 }
 

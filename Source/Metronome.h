@@ -43,13 +43,13 @@ private:
 	double mBPM;
 	int mSamplesRemainder;
 	float mAudioLeveldB;
-	bool firstTrigger;
+	bool mFirstTrigger;
 	bool mIsAudioTriggered;
 	
 	int mOmitCount;
 	
 	juce::AudioFormatManager mFormatManager;
-	std::unique_ptr <juce::AudioFormatReaderSource> pMetronomeSample;
+	std::unique_ptr <juce::AudioFormatReaderSource> mMetronomeSample;
 	
 	juce::Array<juce::File> mSamples;
 };
