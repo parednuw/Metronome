@@ -37,7 +37,9 @@ void PracticeTimer::timerCallback()
 void PracticeTimer::counter()
 {
 	if (getTimerInterval() == 1000)
+	{
 		mPracticeTimerInSec -= 1;
+	}
 	
 	if (mPracticeTimerInSec == 0)
 	{
@@ -76,9 +78,13 @@ juce::String PracticeTimer::getPracticeTimerAsFormattedString()
 	finalString += ":";
 	
 	if (seconds < 10)
+	{
 		finalString += ("0" + juce::String(seconds));
+	}
 	else
+	{
 		finalString += juce::String(seconds);
+	}
 	
 	return finalString;
 }
