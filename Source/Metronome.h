@@ -50,6 +50,4 @@ private:
 	
 	juce::AudioFormatManager mFormatManager;
 	std::unique_ptr <juce::AudioFormatReaderSource> mMetronomeSample;
-	
-	juce::Array<juce::File> mSamples;
 };
