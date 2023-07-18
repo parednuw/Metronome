@@ -26,7 +26,7 @@ void Metronome::setFileToPlay(const juce::String& nameOfFileToPlay)
 	setmSamples(mSamples);
 }
 
-void Metronome::setmSamples(juce::Array<juce::File> mSamplesFromChooser)
+void Metronome::setmSamples(const juce::Array<juce::File>& mSamplesFromChooser)
 {
 	mSamples = mSamplesFromChooser;
 	auto formatReader = mFormatManager.createReaderFor(mSamples[0]);

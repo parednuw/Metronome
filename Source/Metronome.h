@@ -26,7 +26,7 @@ public:
 	int getOmitCount();
 	
 	void setFileToPlay(const juce::String& nameOfFileToPlay);
-	void setmSamples(juce::Array<juce::File> mSamplesFromChooser);
+	void setmSamples(const juce::Array<juce::File>& mSamplesFromChooser);
 	
 	void sliderValueChanged(juce::Slider *slider) override;
 	float getSliderLevel();
