@@ -129,9 +129,13 @@ void MainComponent::chooseSound()
 	int id = mChooseBox.getSelectedId();
 	
 	if (id == 1)
+	{
 		mMetronome.setFileToPlay("HIHAT.wav");
+	}
 	else if (id == 2)
+	{
 		mMetronome.setFileToPlay("COWBELL.wav");
+	}
 	
 }
 
@@ -203,7 +207,9 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
 	bufferToFill.clearActiveBufferRegion();
 	
 	if (mMetronomeState == MetronomeState::Playing)
+	{
 		mMetronome.calcWhenPlayFile(bufferToFill);
+	}
 	
 	float level = juce::Decibels::decibelsToGain(mMetronome.getSliderLevel());
 	
@@ -213,7 +219,9 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
 	{
 		level = 0;
 		if (mMetronome.getOmitCount() == (numberOfClicksToOmit * 2 + 1))
+		{
 			mMetronome.setOmitCount(1);
+		}
 	}
 	
 	bufferToFill.buffer->applyGain(bufferToFill.startSample, bufferToFill.numSamples, level);
