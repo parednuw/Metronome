@@ -10,7 +10,7 @@
 
 #include "PracticeTimer.h"
 
-PracticeTimer::PracticeTimer() : practiceTimerEnabled(false)
+PracticeTimer::PracticeTimer() : mPracticeTimerState(false)
 {
 	
 }
@@ -43,7 +43,7 @@ void PracticeTimer::counter()
 	
 	if (mPracticeTimerInSec == 0)
 	{
-		practiceTimerEnabled = false;
+		mPracticeTimerState = false;
 		resetPracticeTimer();
 	}
 }
@@ -57,6 +57,16 @@ void PracticeTimer::setPracticeTimer(int requestedCountdownInMin)
 int PracticeTimer::practiceTimerMinToSec(int mPracticeTimerInMin)
 {
 	return mPracticeTimerInMin * 60;
+}
+
+void PracticeTimer::setPracticeTimerState(bool stateToSet)
+{
+	mPracticeTimerState = stateToSet;
+}
+
+bool PracticeTimer::getPracticeTimerState()
+{
+	return mPracticeTimerState;
 }
 
 int PracticeTimer::getPracticeTimerInSec()

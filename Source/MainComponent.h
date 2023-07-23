@@ -42,14 +42,7 @@ private:
 		Stopped
 	};
 	
-	enum class PracticeTimerState
-	{
-		Counting,
-		Stopped
-	};
-	
 	MetronomeState mMetronomeState { MetronomeState::Stopped };
-	PracticeTimerState mPracticeTimerState { PracticeTimerState::Stopped };
 	
 	juce::Label mMetronomeLabel;
 	juce::TextButton mPlayButton;
