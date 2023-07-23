@@ -160,7 +160,7 @@ void MainComponent::choosePracticeTime()
 {
 	mPracticeTimer.resetPracticeTimer();
 	
-	mPracticeTimer.practiceTimerEnabled = false;
+	mPracticeTimer.setPracticeTimerState(false);
 	mPracticeTimerStart.setButtonText("Start");
 	
 	int id = mPracticeTimerChooser.getSelectedId();
@@ -170,27 +170,27 @@ void MainComponent::choosePracticeTime()
 void MainComponent::startPracticeTimer()
 {
 	mPracticeTimer.startTimer(1000);
-	mPracticeTimer.practiceTimerEnabled = true;
+	mPracticeTimer.setPracticeTimerState(true);
 }
 
 void MainComponent::stopPracticeTimer()
 {
-	mPracticeTimer.practiceTimerEnabled = false;
+	mPracticeTimer.setPracticeTimerState(false);
 	choosePracticeTime();
 }
 
 void MainComponent::changePracticeTimerState()
 {
-	if (mPracticeTimer.practiceTimerEnabled == false)
+	if (mPracticeTimer.getPracticeTimerState() == false)
 	{
-		mPracticeTimer.practiceTimerEnabled = true;
+		mPracticeTimer.setPracticeTimerState(true);
 		mPracticeTimerStart.setButtonText("Stop");
 		mPracticeTimerStart.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFFC52121));
 		startPracticeTimer();
 	}
-	else if (mPracticeTimer.practiceTimerEnabled == true)
+	else if (mPracticeTimer.getPracticeTimerState() == true)
 	{
-		mPracticeTimer.practiceTimerEnabled = false;
+		mPracticeTimer.setPracticeTimerState(false);
 		mPracticeTimerStart.setButtonText("Start");
 		mPracticeTimerStart.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFFC52121));
 		stopPracticeTimer();
@@ -237,7 +237,7 @@ void MainComponent::timerCallback()
 {
 	updatePracticeTimerDisplay();
 	
-	if(!mPracticeTimer.practiceTimerEnabled)
+	if(!mPracticeTimer.getPracticeTimerState())
 	{
 		mPracticeTimerStart.setButtonText("Start");
 		mPracticeTimerStart.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFF35C521));

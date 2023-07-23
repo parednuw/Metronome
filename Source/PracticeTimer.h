@@ -18,20 +18,21 @@ public:
 	PracticeTimer();
 	~PracticeTimer();
 	
+	void setPracticeTimerState(bool stateToSet);
+	bool getPracticeTimerState();
+	
 	void setPracticeTimer(int requestedPracticeTimerInMin);
 	void resetPracticeTimer();
 	int practiceTimerMinToSec(int timeInMin);
-	
 	int getPracticeTimerInSec();
 	juce::String getPracticeTimerInSecAsString();
 	juce::String getPracticeTimerAsFormattedString();
-	
-	bool practiceTimerEnabled;
 	
 private:
 	void counter();
 	void timerCallback() override;
 	
+	bool mPracticeTimerState;
 	int mPracticeTimerInMin;
 	int mPracticeTimerInSec;
 	int mRequestedPracticeTimerInMin;
