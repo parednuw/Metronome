@@ -141,18 +141,12 @@ void MainComponent::chooseSound()
 
 void MainComponent::omitClick()
 {
-	if (mOmitStatus == false)
+	mOmitStatus = !mOmitStatus;
+	mOmitButton.setColour(juce::TextButton::ColourIds::buttonColourId, mOmitStatus ? juce::Colour(0xFF003068) : juce::Colour(0xFF573068));
+	mOmitButton.setButtonText(mOmitStatus ? "Omitting" : "Omit");
+	if (!mOmitStatus)
 	{
-		mOmitStatus = true;
 		mMetronome.setOmitCount(0);
-		mOmitButton.setButtonText("Omitting");
-		mOmitButton.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFF003068));
-	}
-	else if (mOmitStatus == true)
-	{
-		mOmitStatus = false;
-		mOmitButton.setButtonText("Omit");
-		mOmitButton.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFF573068));
 	}
 }
 
