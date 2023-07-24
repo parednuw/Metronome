@@ -36,14 +36,6 @@ private:
 	Metronome mMetronome;
 	PracticeTimer mPracticeTimer;
 	
-	enum class MetronomeState
-	{
-		Playing,
-		Stopped
-	};
-	
-	MetronomeState mMetronomeState { MetronomeState::Stopped };
-	
 	juce::Label mMetronomeLabel;
 	juce::TextButton mPlayButton;
 	juce::ComboBox mChooseBox;

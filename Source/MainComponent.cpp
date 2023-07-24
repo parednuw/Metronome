@@ -108,16 +108,16 @@ void MainComponent::stop()
 
 void MainComponent::changeMetronomeState()
 {
-	if (mMetronomeState == MetronomeState::Stopped)
+	if (mMetronome.getMetronomeState() == Metronome::MetronomeState::Stopped)
 	{
-		mMetronomeState = MetronomeState::Playing;
+		mMetronome.setMetronomeState(Metronome::MetronomeState::Playing);
 		mPlayButton.setButtonText("Stop");
 		mPlayButton.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFFC52121));
 		play();
 	}
-	else if (mMetronomeState == MetronomeState::Playing)
+	else if (mMetronome.getMetronomeState() == Metronome::MetronomeState::Playing)
 	{
-		mMetronomeState = MetronomeState::Stopped;
+		mMetronome.setMetronomeState(Metronome::MetronomeState::Stopped);
 		mPlayButton.setButtonText("Play");
 		mPlayButton.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colour(0xFF35C521));
 		stop();
@@ -206,7 +206,7 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
 {
 	bufferToFill.clearActiveBufferRegion();
 	
-	if (mMetronomeState == MetronomeState::Playing)
+	if (mMetronome.getMetronomeState() == Metronome::MetronomeState::Playing)
 	{
 		mMetronome.calcWhenPlayFile(bufferToFill);
 	}

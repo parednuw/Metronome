@@ -10,7 +10,7 @@
 
 #include "Metronome.h"
 
-Metronome::Metronome() : mTotalSamples(0), mSampleRate(0), mBPMInSamples(0), mFirstTrigger(false), mIsAudioTriggered(false), mOmitCount(1), mMetronomeSample(nullptr)
+Metronome::Metronome() : mTotalSamples(0), mSampleRate(0), mBPMInSamples(0), mFirstTrigger(false), mIsAudioTriggered(false), mOmitCount(1), mMetronomeSample(nullptr), mMetronomeState(MetronomeState::Stopped)
 {
 	mFormatManager.registerBasicFormats();
 	
@@ -87,6 +87,16 @@ void Metronome::calcWhenPlayFile(const juce::AudioSourceChannelInfo& bufferToFil
 void Metronome::resetCountSamples()
 {
 	mTotalSamples = 0;
+}
+
+void Metronome::setMetronomeState(MetronomeState stateToSet)
+{
+	mMetronomeState = stateToSet;
+}
+
+Metronome::MetronomeState Metronome::getMetronomeState()
+{
+	return mMetronomeState;
 }
 
 void Metronome::setTempo(double newTempo)
