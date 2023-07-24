@@ -21,6 +21,15 @@ public:
 	void calcWhenPlayFile(const juce::AudioSourceChannelInfo&);
 	void resetCountSamples();
 	
+	enum class MetronomeState
+	{
+		Playing,
+		Stopped
+	};
+	
+	void setMetronomeState(MetronomeState stateToSet);
+	MetronomeState getMetronomeState();
+	
 	void setTempo(double newTempo);
 	void setOmitCount(int value);
 	int getOmitCount();
@@ -36,6 +45,8 @@ public:
 	
 private:
 	void hiResTimerCallback() override;
+	
+	MetronomeState mMetronomeState;
 	
 	int mTotalSamples;
 	double mSampleRate;
