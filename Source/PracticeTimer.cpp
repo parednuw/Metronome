@@ -1,13 +1,3 @@
-/*
- ==============================================================================
- 
- cTimer.cpp
- Created: 19 Jun 2022 10:00:39pm
- Author:  Paul Wunder
- 
- ==============================================================================
- */
-
 #include "PracticeTimer.h"
 
 PracticeTimer::PracticeTimer() : mPracticeTimerState(false)

@@ -1,13 +1,3 @@
-/*
- ==============================================================================
- 
- Metronome.cpp
- Created: 28 Feb 2022 5:45:28pm
- Author:  Paul Wunder
- 
- ==============================================================================
- */
-
 #include "Metronome.h"
 
 Metronome::Metronome() : mTotalSamples(0), mSampleRate(0), mBPMInSamples(0), mFirstTrigger(false), mIsAudioTriggered(false), mOmitCount(1), mMetronomeSample(nullptr), mMetronomeState(MetronomeState::Stopped)
