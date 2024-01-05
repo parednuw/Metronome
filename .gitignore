@@ -1,12 +1,19 @@
+#project
+**/build
+**/JUCE
+.DS_STORE
+
+# VS Code files
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/Launch.json
+!.vscode/extensions.json
+*.code-workspace
+
 #user settings
 xcuserdata/
 
 #compatibility with Xcode 8 or earlier
 *.xcscmblueprint
 *.xccheckout
-
-#project
-**/Builds
-**/JuceLibraryCode
-
-.DS_STORE
